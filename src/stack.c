@@ -69,6 +69,7 @@ char *infix_to_postfix(char *strng) {
             break;
             case ')':
                 prio = 1;
+                
                     while (topD(S) != '(') {
                         postfix = str_push(postfix, pop(S));
                         postfix = str_push(postfix, ' ');

@@ -1,37 +1,12 @@
-#include "string_analysis.h"
-#include "stack.h"
-#include "cstack.h"
-#include <stdio.h>
-
-#define X 80
-#define Y 25
-
-void graph(int array[][X]);
-void print_g(int matrix[][X], const char *s, double (*func)(const char *, double));
-
-
-int main() {
-    char *s = str_input();
-    s = infix_to_postfix(str_del_sp(s));;
-    int field[Y][X];
-    for (int i = 0; i < Y; i++) {
-        for (int j = 0; j < X; j++) {
-            field[i][j] = 0;
-        }
-    }
-    print_g(field, s, calc);
-    graph(field);
-}
+#include "graph.h"
 
 void graph(int array[][X]) {
     for (int i = 0; i < Y; i++) {
         for (int j = 0; j < X; j++) {
-            if (array[i][j] == 0) {
+            if (array[i][j] == 0)
                 printf(".");
-            } else {
+            else
                 printf("*");
-            }
-            // printf("%c", array[i][j]);
         }
         printf("\n");
     }
