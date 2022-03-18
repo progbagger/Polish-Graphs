@@ -25,13 +25,14 @@ double cpop(cstack *s) {
     return result;
 }
 
-void destroy(cstack *s) {
+void c_destroy(cstack *s) {
     struct cnode *p;
     while (s->top) {
         p = s->top;
         s->top = p->next;
         free(p);
     }
+    free(s);
 }
 
 
@@ -117,6 +118,6 @@ double calc(const char *expression, double x) {
     if (digit != NULL)
         free(digit);
     double result = cpop(s);
-    destroy(s);
+    c_destroy(s);
     return result;
 }

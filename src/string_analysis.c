@@ -54,6 +54,8 @@ char *str_del_sp(char *str) {
         }
         i++;
     }
+    if (str)
+        free(str);
     return result;
 }
 

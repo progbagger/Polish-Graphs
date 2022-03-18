@@ -149,6 +149,8 @@ char *infix_to_postfix(char *strng) {
                 }
             }
         }
+    if (strng)
+        free(strng);
     return postfix;
 }
 
@@ -165,4 +167,13 @@ void switchCase(Stack *S, int pri, char **posfix, int *toPr, char temp) {
         push(S, temp, pri);
         *toPr = pri;
     }
+}
+
+void destroy(Stack *S) {
+    while (S->top != NULL) {
+        Node *p = S->top;
+        S->top = p->next;
+        free(p);
+    }
+    free(S);
 }

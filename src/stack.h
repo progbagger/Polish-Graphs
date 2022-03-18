@@ -23,5 +23,6 @@ char *infix_to_postfix(char *strng);
 Stack *create();
 char topD(Stack *S);
 void switchCase(Stack *S, int prio, char **postfix, int *topPr, char tmp);
+void destroy(Stack *S);
 
 #endif  // SRC_STACK_H_
