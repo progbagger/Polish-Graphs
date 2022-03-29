@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-CFILES = cstack.c stack.c graph.c string_analysis.c
+CFILES = stack.c graph.c string_analysis.c postfix.c
 HEADERS = $(CFILES:.c=.h)
 OBJECTS = $(CFILES:.c=.o)
 EXEC = graph
