@@ -6,23 +6,23 @@
 #include <string.h>
 #include "string_analysis.h"
 
-typedef struct Node {
-    char data;
-    int prio;
-    struct Node *next;
-} Node;
+struct node {
+    void *data;
+    struct node *next;
+};
 
-typedef struct stack {
-    Node * top;
+typedef struct {
+    struct node *top;
+    void** returned;
+    size_t r_size;
 } Stack;
 
-void push(Stack *S, char d, int pr);
-char pop(Stack *S);
-int top(Stack *S);
-char *infix_to_postfix(char *strng);
-Stack *create();
-char topD(Stack *S);
-void switchCase(Stack *S, int prio, char **postfix, int *topPr, char tmp);
-void destroy(Stack *S);
+Stack *init_stack();
+Stack* destroy_stack(Stack *s);
+int is_stack_empty(Stack *s);
+
+void push_stack(Stack *s, void *value, size_t v_size);
+void *pop_stack(Stack *s);
+void *top_stack(Stack *s);
 
 #endif  // SRC_STACK_H_

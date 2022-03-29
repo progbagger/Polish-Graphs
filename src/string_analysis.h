@@ -10,5 +10,6 @@ char *str_input();
 char *str_del_sp(char *str);
 char *str_push(char *str, const char c);
 int str_to_int(const char *str);
+char *str_free(char *str);
 
 #endif  // SRC_STRING_ANALYSIS_H_
