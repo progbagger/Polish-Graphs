@@ -69,7 +69,7 @@ char *str_del_sp(char *str) {
             } else if ((str[i] >= '0' && str[i] <= '9') || strchr(ops, str[i]) || str[i] == 'x') {
                 result = str_push(result, str[i]);
             } else {
-                printf("[ERROR] Reading undefined symbol.");
+                printf("[ERROR] Incorrect expression");
                 result = str_free(result);
                 break;
             }

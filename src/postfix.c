@@ -168,7 +168,6 @@ Stack *calc_operator(Stack *s, const char *str, const size_t i) {
             break;
         case '/':
             if (x2 == 0) {
-                printf("[ERROR] Division by zero: %lf / %lf\n", x1, x2);
                 s = destroy_stack(s);
             } else {
                 result = x1 / x2;
@@ -208,7 +207,6 @@ Stack *calc_func(Stack *s, const char *str, size_t *i) {
             case 't':
                 result = *((double*) pop_stack(s));
                 if (tan(result) == 0) {
-                    printf("[ERROR] ctg(0) is not an option\n");
                     s = destroy_stack(s);
                 } else {
                     result = (double) 1 / tan(result);
@@ -218,7 +216,6 @@ Stack *calc_func(Stack *s, const char *str, size_t *i) {
             case 'n':
                 result = *((double*) pop_stack(s));
                 if (result == 0) {
-                    printf("[ERROR] log(0) is not an option\n");
                     s = destroy_stack(s);
                 } else {
                     result = log(result);
