@@ -1,60 +1,60 @@
-#include "string_analysis.h"
-#include "stack.h"
-#include "cstack.h"
+#include "graph.h"
+
+#include <math.h>
 #include <stdio.h>
 
-#define X 80
-#define Y 25
-
-void graph(int array[][X]);
-void print_g(int matrix[][X], const char *s, double (*func)(const char *, double));
-
-
-int main() {
-    char *s = str_input();
-    s = infix_to_postfix(str_del_sp(s));;
-    int field[Y][X];
-    for (int i = 0; i < Y; i++) {
-        for (int j = 0; j < X; j++) {
-            field[i][j] = 0;
-        }
-    }
-    print_g(field, s, calc);
-    graph(field);
+void null_matrix(int matrix[][M]) {
+    for (size_t i = 0; i < N; i++)
+        for (size_t j = 0; j < M; j++)
+            matrix[i][j] = 0;
 }
 
-void graph(int array[][X]) {
-    for (int i = 0; i < Y; i++) {
-        for (int j = 0; j < X; j++) {
-            if (array[i][j] == 0) {
-                printf(".");
+// Output plot of expression
+void print_graph(const char *s, double (*func)(const char *, const double)) {
+    int matrix[N][M];
+    null_matrix(matrix);
+    double x_y[2][M];
+    double x_step = (double) (_MAX_X - _MIN_X) / (double) (M - 1);
+    double y_step = (double) (_MAX_Y - _MIN_Y) / (double) (N - 1);
+    for (size_t i = 0; i < M; i++) {
+        x_y[0][i] = _MIN_X + (double) i * x_step;
+        x_y[1][i] = func(s, x_y[0][i]);
+    }
+    double y_a[N];
+    for (size_t i = 0; i < N; i++)
+        y_a[i] = _MIN_Y + (double) i * y_step;
+    for (size_t x = 0; x < M; x++) {
+        for (size_t y = 0; y < N - 1; y++) {
+            if (x_y[1][x] >= y_a[y] && x_y[1][x] <= y_a[y + 1]) {
+                if (x_y[1][x] < (y_a[y] + y_a[y + 1]) / 2)
+                    matrix[y][x] = 1;
+                else
+                    matrix[y + 1][x] = 1;
+            }
+        }
+    }
+    printf("Printing plot for equation in postfix notation: y = %s\n", s);
+    printf("Params - ");
+    printf("Step at X axis: %-8.2lf ", x_step);
+    printf("Step at Y axis: %-8.2lf\n\n", y_step);
+    for (size_t j = 0; j < 8 + 1; j++)
+        printf(" ");
+    printf("%-8.2lf", (double) _MIN_X);
+    for (size_t j = 0; j < M - 16; j++)
+        printf(" ");
+    printf("%8.2lf\n", (double) _MAX_X);
+    for (size_t i = 0; i < N; i++) {
+        for (size_t j = 0; j <= M; j++) {
+            if (j == 0) {
+                printf("%8.2lf ", y_a[i]);
             } else {
-                printf("*");
+                if (matrix[i][j - 1] == 1)
+                    printf("*");
+                else
+                    printf("-");
             }
-            // printf("%c", array[i][j]);
         }
-        printf("\n");
-    }
-}
-
-void print_g(int matrix[][X], const char *s, double (*func)(const char *, double)) {
-    double digit[2][X];
-    double shift = 0;
-    double yy[Y - 4];
-    for (int i = 0; i < X; i++) {
-        digit[0][i] = shift;
-        shift += 4 * M_PI / 79.0;
-        digit[1][i] = round(10 * func(s, digit[0][i])) / 10.0;
-    }
-    shift = -1;
-    for (int i = 2; i < Y - 2; i++) {
-        yy[i - 2] = round(10 * shift) / 10.0;
-        shift += 1.0 / 10.0;
-    }
-    for (int j = 0; j < X; j++) {
-        for (int i = 2; i < Y - 2; i++)
-            if (digit[1][j] == yy[i - 2]) {
-                matrix[i][j] = 1;
-            }
+        if (i != N - 1)
+            printf("\n");
     }
 }

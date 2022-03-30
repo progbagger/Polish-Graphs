@@ -1,16 +1,21 @@
-all: graph
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+CFILES = stack.c graph.c string_analysis.c postfix.c
+HEADERS = $(CFILES:.c=.h)
+OBJECTS = $(CFILES:.c=.o)
+EXEC = graph
+PTH = ../build/
+MAIN = main.c
 
-graph: graph.c string_analysis.o cstack.o stack.o
-	gcc -Wall -Werror -Wextra graph.c string_analysis.o cstack.o stack.o -o ../build/graph
+all: build clean
 
-stack.o: stack.c stack.h
-	gcc -Wall -Werror -Wextra -c stack.c
+build: $(EXEC)
 
-string_analysis.o: string_analysis.c string_analysis.h
-	gcc -Wall -Werror -Wextra -c string_analysis.c
+$(EXEC): $(MAIN) $(OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $(PTH)$(EXEC) -lm
 
-cstack.o: cstack.c cstack.h
-	gcc -Wall -Werror -Wextra -c cstack.c
+$(OBJECTS): $(CFILES)
+	$(CC) $(CFLAGS) -c $^
 
 clean:
-	rm -rf *.o *.a *.out ../build/graph
+	rm -rf *.o *.a *.out
